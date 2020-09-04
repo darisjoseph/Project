@@ -1,0 +1,39 @@
+#!/bin/bash
+# Description: CENTOS7 HARDENING
+# Author: Daris T.
+#Date: September 4, 2020
+
+
+if [ -e /etc/modprobe.d/CIS-blacklist.conf ]; then
+        rm -f /etc/modprobe.d/CIS-blacklist.conf
+fi
+touch /etc/modprobe.d/CIS-blacklist.conf
+chmod 0644 /etc/modprobe.d/CIS-blacklist.conf
+chcon 'system_u:object_r:modules_conf_t:s0' /etc/modprobe.d/CIS-blacklist.conf
+
+# Disable mounting of unneeded filesystems CIS 1.1.1 and CIS 3.5
+cat << EOF >> /etc/modprobe.d/CIS-blacklist.conf
+# Disable cramfs
+install cramfs /bin/true
+# Disable freevxfs
+install freevxfs /bin/true
+# install jffs2
+install jffs2 /bin/true
+#Disable hfs
+install hfs /bin/true
+#Disable hfsplus
+install hfsplus /bin/true
+#Disable squashfs
+install squashfs /bin/true
+#Disable udf
+install udf /bin/true
+#Disable dccp
+install dccp /bin/true
+#Disable sctp
+install sctp /bin/true
+#Disable rds
+install rds /bin/true
+#Disable tipc
+install tipc /bin/true
+EOF
+
